@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "BIOL 1414 Drill",
+      "hasCanvas": false,
+      "bodyTextLen": 384,
+      "bodyTextHash": "718c16d9cf6a422029f0c845acfdadc881eb508feab277b114b33b231b436655",
+      "bodyTextPrefix": "BIOL 1414 · LECTURES 2–6 Drill Type an answer, reveal, and see i",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "BIOL 1414 Drill",
+      "hasCanvas": false,
+      "bodyTextLen": 384,
+      "bodyTextHash": "718c16d9cf6a422029f0c845acfdadc881eb508feab277b114b33b231b436655",
+      "bodyTextPrefix": "BIOL 1414 · LECTURES 2–6 Drill Type an answer, reveal, and see i",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}

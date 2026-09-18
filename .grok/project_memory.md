@@ -1,0 +1,2 @@
+- Course pack is BIOL 1414 Intro to Cell and Molecular Biology lectures 2–6 (scientific method through cells). Files: BIOL_1414_Intro_to_Cell_and_Molec_Bio_lec_06.ppt plus zip of lec 02–05 pptx. [2026-09-18]
+- Saved study packet to artifacts/BIOL_1414_Lectures_2-6_Study_Packet.docx, quiz bank BIOL_1414_Lectures_2-6_Quiz_Bank.docx, review deck BIOL_1414_Lectures_2-6_Review_Deck.pptx, and 148-card flashcards BIOL_1414_Lectures_2-6_Flashcards.xlsx. [2026-09-18]
