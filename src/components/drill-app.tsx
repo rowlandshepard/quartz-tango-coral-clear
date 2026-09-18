@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { FLASHCARDS, type Flashcard } from "@/data/flashcards";
 import { Button } from "@/components/ui/button";
+import { SiteNav } from "@/components/site-nav";
 import { gradeGuess } from "@/lib/grade";
 import {
   applyTag,
@@ -157,6 +158,7 @@ export function DrillApp() {
               Type an answer, reveal, and see if you were right. Tag Known to drop a card from later shuffles.
             </p>
           </div>
+          <SiteNav current="drill" />
           <div className="flex flex-wrap gap-2 text-xs tabular-nums text-fg-muted">
             <Stat label="In deck" value={pool.length} />
             <Stat label="Known" value={knownInFilter} />

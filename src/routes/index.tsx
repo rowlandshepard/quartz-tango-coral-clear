@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { DrillApp } from "@/components/drill-app";
+import { QuizApp } from "@/components/quiz-app";
 
 export const Route = createFileRoute("/")({ component: Home });
 
 function Home() {
-  return <DrillApp />;
+  return <QuizApp />;
 }
