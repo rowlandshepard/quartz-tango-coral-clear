@@ -1,9 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BIOL 1414 Drill</title>
-  </head>
-  <body></body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BIOL 1414 Drill</title>
+  <meta name="theme-color" content="#1e3a5f" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:#f3efe6; --surface:#faf8f3; --muted:#e8e2d4; --fg:#1a1916;
+      --fg-muted:#5c574e; --fg-subtle:#7a7468; --primary:#1e3a5f;
+      --primary-fg:#f3efe6; --border:#d4cdc0; --success:#3f6f5b; --danger:#8f3d3a;
+      --font-display:"Newsreader", Georgia, serif;
+      --font-sans:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin:0; background:var(--bg); color:var(--fg); font-family:var(--font-sans); line-height:1.5; min-height:100%; }
+    button { font: inherit; cursor: pointer; }
+    button:disabled { cursor: default; opacity:.6; }
+    .wrap { max-width: 48rem; margin: 0 auto; padding: 2rem 1rem 3rem; display:flex; flex-direction:column; gap:1.5rem; }
+    h1 { font-family:var(--font-display); font-size:2.5rem; font-weight:500; letter-spacing:-.03em; color:var(--primary); margin:.25rem 0 0; }
+    .kicker { font-size:.75rem; letter-spacing:.18em; text-transform:uppercase; color:var(--fg-subtle); font-weight:500; }
+    .lede { color:var(--fg-muted); font-size:.9rem; max-width:28rem; }
+    .stats { display:flex; flex-wrap:wrap; gap:.5rem; }
+    .stat { border:1px solid var(--border); background:var(--surface); border-radius:.5rem; padding:.5rem .75rem; font-size:.75rem; color:var(--fg-muted); }
+    .stat b { display:block; font-family:var(--font-display); font-size:1.15rem; color:var(--fg); font-weight:500; }
+    .row { display:flex; flex-wrap:wrap; gap:.4rem; align-items:center; }
+    .lbl { width:4rem; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--fg-subtle); font-weight:500; }
+    .chip { min-height:44px; border:0; border-radius:.5rem; padding:0 .75rem; background:var(--muted); color:var(--fg); font-weight:500; }
+    .chip.on { background:var(--primary); color:var(--primary-fg); }
+    .bar { height:4px; background:var(--muted); border-radius:999px; overflow:hidden; }
+    .bar > i { display:block; height:100%; background:var(--primary); width:0; }
+    .card { background:var(--surface); border:1px solid var(--border); border-radius:1rem; padding:1.4rem; }
+    .meta { display:flex; justify-content:space-between; gap:.5rem; flex-wrap:wrap; margin-bottom:1rem; }
+    .pill { background:var(--muted); border-radius:.35rem; padding:.2rem .5rem; font-size:.75rem; color:var(--fg-muted); }
+    .pill.need { background:rgba(143,61,58,.12); color:var(--danger); }
+    h2.term { font-family:var(--font-display); font-size:1.7rem; font-weight:500; margin:0; letter-spacing:-.02em; }
+    label.block { display:block; margin-top:1.25rem; }
+    label.block span { display:block; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--fg-subtle); margin-bottom:.4rem; }
+    textarea { width:100%; min-height:5.5rem; border:1px solid var(--border); border-radius:.5rem; background:var(--bg); color:var(--fg); padding:.7rem .8rem; font:inherit; }
+    textarea:focus { outline:2px solid var(--primary); outline-offset:1px; }
+    .actions { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.1rem; }
+    .btn { min-height:44px; border:0; border-radius:.5rem; padding:0 1rem; font-weight:500; background:var(--primary); color:var(--primary-fg); }
+    .btn.sec { background:transparent; color:var(--fg); border:1px solid var(--border); }
+    .btn.ok { background:var(--success); color:#f3efe6; }
+    .btn.bad { background:var(--danger); color:#f3efe6; }
+    .verdict { border:1px solid var(--border); border-radius:.5rem; padding:.85rem 1rem; margin-top:1rem; }
+    .verdict.ok { border-color:rgba(63,111,91,.35); background:rgba(63,111,91,.1); }
+    .verdict.bad { border-color:rgba(143,61,58,.35); background:rgba(143,61,58,.1); }
+    .official { border:1px solid var(--border); background:var(--bg); border-radius:.5rem; padding:1rem; margin-top:.75rem; }
+    .official .k { font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--fg-subtle); }
+    .empty { text-align:center; padding:2rem 1rem; }
+    .foot { font-size:.75rem; color:var(--fg-subtle); }
+    .grid2 { display:grid; gap:.5rem; margin-top:.75rem; }
+    @media (min-width:640px){ .grid2 { grid-template-columns:1fr 1fr; } h2.term { font-size:2rem; } }
+    @media (prefers-reduced-motion: reduce){ * { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <p class="kicker">BIOL 1414 · Lectures 2–6</p>
+      <h1>Drill</h1>
+      <p class="lede">Type an answer, reveal, and see if you were right. Tag Known to drop a card from later shuffles.</p>
+    </header>
+    <div class="stats">
+      <div class="stat">In deck<b id="statDeck">0</b></div>
+      <div class="stat">Known<b id="statKnown">0</b></div>
+      <div class="stat">Needs work<b id="statNeed">0</b></div>
+    </div>
+    <div class="row"><span class="lbl">Lecture</span><div id="lecRow" class="row"></div></div>
+    <div class="row"><span class="lbl">Type</span><div id="typeRow" class="row"></div></div>
+    <div class="bar"><i id="bar"></i></div>
+    <section id="stage" class="card"></section>
+    <p class="foot">148 cards from the lecture 2–6 vocab workbook. Known tags stay in this browser.</p>
+  </div>
+  <script>
+    const CARDS = [{"id":"l2-t-biology","lecture":2,"type":"Term","front":"Biology","back":"Scientific study of living things (bios = life, logia = study)."},{"id":"l2-t-ecology","lecture":2,"type":"Term","front":"Ecology","back":"Scientific study of organisms and their environment."},{"id":"l2-t-science","lecture":2,"type":"Term","front":"Science","back":"Systematic observation of nature to discover facts and formulate principles, theories, and laws."},{"id":"l2-t-hypothesis","lecture":2,"type":"Term","front":"Hypothesis","back":"Proposed explanation that is testable and falsifiable."},{"id":"l2-t-observation","lecture":2,"type":"Term","front":"Observation","back":"Recognizing a fact or occurrence, often with measurement."},{"id":"l2-t-data","lecture":2,"type":"Term","front":"Data","back":"Values of qualitative or quantitative variables belonging to a set of items."},{"id":"l2-t-qualitative-data","lecture":2,"type":"Term","front":"Qualitative data","back":"Descriptions observed but not measured (color, texture, smell)."},{"id":"l2-t-quantitative-data","lecture":2,"type":"Term","front":"Quantitative data","back":"Measured numeric data (mass, temperature, count)."},{"id":"l2-t-independent-variable","lecture":2,"type":"Term","front":"Independent variable","back":"The factor the experimenter changes."},{"id":"l2-t-dependent-variable","lecture":2,"type":"Term","front":"Dependent variable","back":"The factor that is measured; it depends on the independent variable."},{"id":"l2-t-control-group","lecture":2,"type":"Term","front":"Control group","back":"Receives every element of the experiment except the factor being tested."},{"id":"l2-t-controlled-variables","lecture":2,"type":"Term","front":"Controlled variables","back":"Factors held constant so they do not confound results."},{"id":"l2-t-falsifiable","lecture":2,"type":"Term","front":"Falsifiable","back":"Possible, in principle, to show the claim is wrong."},{"id":"l2-t-principle","lecture":2,"type":"Term","front":"Principle","back":"A fundamental finding based on a single evaluation of a hypothesis."},{"id":"l2-t-theory","lecture":2,"type":"Term","front":"Theory","back":"Repeatedly tested explanatory framework; not a casual guess."},{"id":"l2-t-law","lecture":2,"type":"Term","front":"Law","back":"Generalization that describes what happens without explaining why."},{"id":"l2-t-inductive-reasoning","lecture":2,"type":"Term","front":"Inductive reasoning","back":"Specific observations used to reach a general conclusion (small to big)."},{"id":"l2-t-deductive-reasoning","lecture":2,"type":"Term","front":"Deductive reasoning","back":"General law or theory used to predict a specific result (big to small)."},{"id":"l2-t-peer-review","lecture":2,"type":"Term","front":"Peer review","back":"Independent experts evaluate a manuscript before publication."},{"id":"l2-t-serendipity-in-science","lecture":2,"type":"Term","front":"Serendipity in science","back":"Fortunate accident that becomes science only after it is tested (Fleming / penicillin)."},{"id":"l2-c-hypothesis-vs-theory-vs-law","lecture":2,"type":"Compare","front":"Hypothesis vs theory vs law","back":"Hypothesis = testable idea; theory = supported explanation; law = descriptive rule."},{"id":"l2-c-qualitative-vs-quantitative","lecture":2,"type":"Compare","front":"Qualitative vs quantitative","back":"Words and qualities vs numbers."},{"id":"l2-c-independent-vs-dependent-variable","lecture":2,"type":"Compare","front":"Independent vs dependent variable","back":"What you change vs what you measure."},{"id":"l2-c-inductive-vs-deductive","lecture":2,"type":"Compare","front":"Inductive vs deductive","back":"Data up to a generalization vs principle down to a prediction."},{"id":"l3-t-peer-reviewed-journal","lecture":3,"type":"Term","front":"Peer-reviewed journal","back":"Gold-standard source; hard to publish; ~70% of papers rejected."},{"id":"l3-t-imrad","lecture":3,"type":"Term","front":"IMRaD","back":"Introduction, Methods, Results, Discussion."},{"id":"l3-t-abstract","lecture":3,"type":"Term","front":"Abstract","back":"Short summary of the entire paper."},{"id":"l3-t-introduction","lecture":3,"type":"Term","front":"Introduction","back":"States the unknown; starts broad and narrows to this study."},{"id":"l3-t-methods","lecture":3,"type":"Term","front":"Methods","back":"Detailed enough that another lab can replicate."},{"id":"l3-t-results","lecture":3,"type":"Term","front":"Results","back":"What was found; numbers and statistics."},{"id":"l3-t-discussion","lecture":3,"type":"Term","front":"Discussion","back":"What the results mean in context of the introduction."},{"id":"l3-t-review-paper","lecture":3,"type":"Term","front":"Review paper","back":"Summarizes many studies; does not follow IMRaD."},{"id":"l3-t-boolean-and","lecture":3,"type":"Term","front":"Boolean AND","back":"Requires both search terms (narrows)."},{"id":"l3-t-boolean-or","lecture":3,"type":"Term","front":"Boolean OR","back":"Retrieves either term (broadens)."},{"id":"l3-t-boolean-not","lecture":3,"type":"Term","front":"Boolean NOT","back":"Excludes a term."},{"id":"l3-t-homeostasis","lecture":3,"type":"Term","front":"Homeostasis","back":"Maintenance of internal constancy."},{"id":"l3-t-irritability","lecture":3,"type":"Term","front":"Irritability","back":"Ability to respond to stimuli."},{"id":"l3-t-adaptation","lecture":3,"type":"Term","front":"Adaptation","back":"A trait that helps survival/reproduction."},{"id":"l3-t-evolution","lecture":3,"type":"Term","front":"Evolution","back":"Change in populations across generations."},{"id":"l3-t-eight-criteria-of-life","lecture":3,"type":"Term","front":"Eight criteria of life","back":"Organization, metabolism, homeostasis, reproduction, growth/development, irritability, adaptation, evolution."},{"id":"l3-t-atom","lecture":3,"type":"Term","front":"Atom","back":"Smallest unit of an element that keeps its chemical properties."},{"id":"l3-t-population","lecture":3,"type":"Term","front":"Population","back":"Individuals of one species in an area."},{"id":"l3-t-community","lecture":3,"type":"Term","front":"Community","back":"All species interacting in an area."},{"id":"l3-t-ecosystem","lecture":3,"type":"Term","front":"Ecosystem","back":"Community plus abiotic environment."},{"id":"l3-t-biosphere","lecture":3,"type":"Term","front":"Biosphere","back":"All ecosystems on Earth."},{"id":"l3-c-abstract-vs-discussion","lecture":3,"type":"Compare","front":"Abstract vs discussion","back":"Whole-paper summary vs interpretation of meaning."},{"id":"l3-c-review-paper-vs-research-paper","lecture":3,"type":"Compare","front":"Review paper vs research paper","back":"Many-study summary vs original experiment in IMRaD."},{"id":"l3-c-adaptation-vs-evolution","lecture":3,"type":"Compare","front":"Adaptation vs evolution","back":"Helpful trait vs change across generations."},{"id":"l3-c-population-vs-community","lecture":3,"type":"Compare","front":"Population vs community","back":"One species vs all interacting species."},{"id":"l3-c-ecosystem-vs-biosphere","lecture":3,"type":"Compare","front":"Ecosystem vs biosphere","back":"One community + environment vs all ecosystems."},{"id":"l4-t-proton","lecture":4,"type":"Term","front":"Proton","back":"+1 charge, ~1 amu, in the nucleus; number defines the element."},{"id":"l4-t-neutron","lecture":4,"type":"Term","front":"Neutron","back":"0 charge, ~1 amu, in the nucleus; number can vary (isotopes)."},{"id":"l4-t-electron","lecture":4,"type":"Term","front":"Electron","back":"−1 charge, negligible mass, in orbitals."},{"id":"l4-t-nucleus-atom","lecture":4,"type":"Term","front":"Nucleus (atom)","back":"Center of the atom containing protons and neutrons."},{"id":"l4-t-atomic-number","lecture":4,"type":"Term","front":"Atomic number","back":"Number of protons; identity of the element."},{"id":"l4-t-mass-number","lecture":4,"type":"Term","front":"Mass number","back":"Protons plus neutrons."},{"id":"l4-t-isotope","lecture":4,"type":"Term","front":"Isotope","back":"Same protons, different neutrons (C-12 vs C-14)."},{"id":"l4-t-atomic-mass","lecture":4,"type":"Term","front":"Atomic mass","back":"Weighted average of an element's isotopes (Cl ≈ 35.45)."},{"id":"l4-t-molecule","lecture":4,"type":"Term","front":"Molecule","back":"Two or more atoms chemically bonded."},{"id":"l4-t-compound","lecture":4,"type":"Term","front":"Compound","back":"Substance containing atoms of more than one element."},{"id":"l4-t-reactant","lecture":4,"type":"Term","front":"Reactant","back":"Substance going into a chemical reaction (left of arrow)."},{"id":"l4-t-product","lecture":4,"type":"Term","front":"Product","back":"Substance formed by a chemical reaction (right of arrow)."},{"id":"l4-t-conservation-of-mass","lecture":4,"type":"Term","front":"Conservation of mass","back":"Mass is not created or destroyed; equations stay balanced."},{"id":"l4-t-ion","lecture":4,"type":"Term","front":"Ion","back":"Atom that gained or lost electrons to stabilize its outer shell."},{"id":"l4-t-cation","lecture":4,"type":"Term","front":"Cation","back":"Positive ion formed by losing electrons."},{"id":"l4-t-anion","lecture":4,"type":"Term","front":"Anion","back":"Negative ion formed by gaining electrons (names often end in -ide)."},{"id":"l4-t-ionic-bond","lecture":4,"type":"Term","front":"Ionic bond","back":"Attraction between opposite ions after electron transfer (NaCl)."},{"id":"l4-t-electrolyte","lecture":4,"type":"Term","front":"Electrolyte","back":"Dissolved ion such as Na+, K+, Ca2+ needed for nerves and muscle."},{"id":"l4-t-covalent-bond","lecture":4,"type":"Term","front":"Covalent bond","back":"Atoms share electrons; strongest common bond in living chemistry."},{"id":"l4-t-polar-covalent-bond","lecture":4,"type":"Term","front":"Polar covalent bond","back":"Unequal sharing of electrons (water)."},{"id":"l4-t-nonpolar-covalent-bond","lecture":4,"type":"Term","front":"Nonpolar covalent bond","back":"Equal sharing of electrons (O2)."},{"id":"l4-t-hydrogen-bond","lecture":4,"type":"Term","front":"Hydrogen bond","back":"Weak attraction between δ+ H on one molecule and δ− on another."},{"id":"l4-t-polarity-of-water","lecture":4,"type":"Term","front":"Polarity of water","back":"O is δ−, H is δ+; molecule has no net charge."},{"id":"l4-c-atomic-number-vs-mass-number","lecture":4,"type":"Compare","front":"Atomic number vs mass number","back":"Protons only vs protons + neutrons."},{"id":"l4-c-cation-vs-anion","lecture":4,"type":"Compare","front":"Cation vs anion","back":"Lost electrons (+) vs gained electrons (−)."},{"id":"l4-c-ionic-vs-covalent","lecture":4,"type":"Compare","front":"Ionic vs covalent","back":"Transfer electrons vs share electrons."},{"id":"l4-c-polar-vs-nonpolar-covalent","lecture":4,"type":"Compare","front":"Polar vs nonpolar covalent","back":"Unequal sharing (H2O) vs equal sharing (O2)."},{"id":"l4-c-hydrogen-bond-vs-covalent-bond","lecture":4,"type":"Compare","front":"Hydrogen bond vs covalent bond","back":"Weak between molecules vs strong sharing inside a molecule."},{"id":"l4-c-molecule-vs-compound","lecture":4,"type":"Compare","front":"Molecule vs compound","back":"≥2 atoms vs ≥2 different elements (O2 is a molecule, not a compound)."},{"id":"l5-t-organic-molecule","lecture":5,"type":"Term","front":"Organic molecule","back":"Contains carbon; macromolecules dominate dry mass of cells."},{"id":"l5-t-monomer","lecture":5,"type":"Term","front":"Monomer","back":"Building-block molecule."},{"id":"l5-t-polymer","lecture":5,"type":"Term","front":"Polymer","back":"Chain of monomers linked by covalent bonds."},{"id":"l5-t-dehydration-synthesis","lecture":5,"type":"Term","front":"Dehydration synthesis","back":"Join monomers, release water, require energy."},{"id":"l5-t-hydrolysis","lecture":5,"type":"Term","front":"Hydrolysis","back":"Insert water, break a polymer, release energy."},{"id":"l5-t-enzyme","lecture":5,"type":"Term","front":"Enzyme","back":"Biological catalyst; not consumed; specific (protease, lipase)."},{"id":"l5-t-carbohydrate","lecture":5,"type":"Term","front":"Carbohydrate","back":"Energy and structure; formula (CH2O)n; C:H:O ≈ 1:2:1."},{"id":"l5-t-monosaccharide","lecture":5,"type":"Term","front":"Monosaccharide","back":"Simple sugar, usually 3–7 carbons; glucose is the main human fuel."},{"id":"l5-t-disaccharide","lecture":5,"type":"Term","front":"Disaccharide","back":"Two monosaccharides joined by a glycosidic bond (sucrose, lactose, maltose)."},{"id":"l5-t-polysaccharide","lecture":5,"type":"Term","front":"Polysaccharide","back":"Long chain of sugars; may be branched."},{"id":"l5-t-glycosidic-bond","lecture":5,"type":"Term","front":"Glycosidic bond","back":"Covalent bond joining sugars."},{"id":"l5-t-lactose","lecture":5,"type":"Term","front":"Lactose","back":"Glucose + galactose."},{"id":"l5-t-starch","lecture":5,"type":"Term","front":"Starch","back":"Plant energy-storage polysaccharide of glucose."},{"id":"l5-t-glycogen","lecture":5,"type":"Term","front":"Glycogen","back":"Animal energy-storage polysaccharide of glucose."},{"id":"l5-t-cellulose","lecture":5,"type":"Term","front":"Cellulose","back":"Structural glucose polymer in plant cell walls."},{"id":"l5-t-lipid","lecture":5,"type":"Term","front":"Lipid","back":"Hydrophobic molecule used for storage, membranes, insulation."},{"id":"l5-t-triglyceride","lecture":5,"type":"Term","front":"Triglyceride","back":"Glycerol + three fatty acids; energy storage."},{"id":"l5-t-phospholipid","lecture":5,"type":"Term","front":"Phospholipid","back":"Two fatty-acid tails + phosphate head; membrane building block."},{"id":"l5-t-protein","lecture":5,"type":"Term","front":"Protein","back":"Polymer of amino acids; enzymes, structure, contraction."},{"id":"l5-t-amino-acid","lecture":5,"type":"Term","front":"Amino acid","back":"Protein monomer: amino group, carboxyl group, variable R group."},{"id":"l5-t-peptide-bond","lecture":5,"type":"Term","front":"Peptide bond","back":"Covalent bond between amino acids."},{"id":"l5-t-primary-structure","lecture":5,"type":"Term","front":"Primary structure","back":"Amino-acid sequence of a protein."},{"id":"l5-t-secondary-structure","lecture":5,"type":"Term","front":"Secondary structure","back":"Local folding such as α-helix and β-sheet."},{"id":"l5-t-tertiary-structure","lecture":5,"type":"Term","front":"Tertiary structure","back":"Overall 3-D fold of one polypeptide."},{"id":"l5-t-quaternary-structure","lecture":5,"type":"Term","front":"Quaternary structure","back":"Assembly of multiple polypeptide subunits."},{"id":"l5-t-denaturation","lecture":5,"type":"Term","front":"Denaturation","back":"Unfolding that destroys protein function."},{"id":"l5-t-nucleic-acid","lecture":5,"type":"Term","front":"Nucleic acid","back":"DNA or RNA; information molecules."},{"id":"l5-t-nucleotide","lecture":5,"type":"Term","front":"Nucleotide","back":"Sugar + phosphate + nitrogenous base."},{"id":"l5-t-dna","lecture":5,"type":"Term","front":"DNA","back":"Double helix, deoxyribose, bases A T G C; archives instructions."},{"id":"l5-t-rna","lecture":5,"type":"Term","front":"RNA","back":"Usually single-stranded, ribose, bases A U G C; working copies."},{"id":"l5-c-dehydration-vs-hydrolysis","lecture":5,"type":"Compare","front":"Dehydration vs hydrolysis","back":"Build + lose water + use energy vs break + add water + release energy."},{"id":"l5-c-starch-vs-glycogen-vs-cellulose","lecture":5,"type":"Compare","front":"Starch vs glycogen vs cellulose","back":"Plant store / animal store / plant wall — all glucose, different links."},{"id":"l5-c-phospholipid-vs-triglyceride","lecture":5,"type":"Compare","front":"Phospholipid vs triglyceride","back":"Membrane lipid vs storage fat."},{"id":"l5-c-primary-vs-tertiary-structure","lecture":5,"type":"Compare","front":"Primary vs tertiary structure","back":"Sequence vs overall 3-D fold."},{"id":"l5-c-dna-vs-rna","lecture":5,"type":"Compare","front":"DNA vs RNA","back":"T + double helix + deoxyribose vs U + usually single + ribose."},{"id":"l6-t-cell","lecture":6,"type":"Term","front":"Cell","back":"Smallest unit of a living thing; basic building block of organisms."},{"id":"l6-t-cell-theory","lecture":6,"type":"Term","front":"Cell theory","back":"All life is cellular; the cell is the basic unit of life; new cells come from existing cells."},{"id":"l6-t-light-microscope","lecture":6,"type":"Term","front":"Light microscope","back":"Lab scope, about 40×–1000×, inverted image, often needs stain."},{"id":"l6-t-electron-microscope","lecture":6,"type":"Term","front":"Electron microscope","back":"Higher magnification and resolution; large and expensive."},{"id":"l6-t-prokaryote","lecture":6,"type":"Term","front":"Prokaryote","back":"No nucleus (nucleoid); no membrane-bound organelles; generally smaller."},{"id":"l6-t-eukaryote","lecture":6,"type":"Term","front":"Eukaryote","back":"True nucleus and membrane-bound organelles; generally larger."},{"id":"l6-t-nucleoid","lecture":6,"type":"Term","front":"Nucleoid","back":"Region of DNA in a prokaryote."},{"id":"l6-t-plasma-membrane","lecture":6,"type":"Term","front":"Plasma membrane","back":"Boundary of the cell; present in plants and animals."},{"id":"l6-t-nucleus","lecture":6,"type":"Term","front":"Nucleus","back":"Houses DNA in eukaryotes."},{"id":"l6-t-rough-er","lecture":6,"type":"Term","front":"Rough ER","back":"ER with ribosomes; proteins for secretion or membranes."},{"id":"l6-t-smooth-er","lecture":6,"type":"Term","front":"Smooth ER","back":"ER without ribosomes; lipids, detox, Ca2+ storage."},{"id":"l6-t-golgi-apparatus","lecture":6,"type":"Term","front":"Golgi apparatus","back":"Sorts, tags, packages, ships proteins/lipids; plant wall sugars."},{"id":"l6-t-lysosome","lecture":6,"type":"Term","front":"Lysosome","back":"Digestive organelle; helps destroy pathogens in animals."},{"id":"l6-t-mitochondrion","lecture":6,"type":"Term","front":"Mitochondrion","back":"Energy-conversion organelle in plant and animal cells."},{"id":"l6-t-chloroplast","lecture":6,"type":"Term","front":"Chloroplast","back":"Photosynthetic organelle in plant cells."},{"id":"l6-t-central-vacuole","lecture":6,"type":"Term","front":"Central vacuole","back":"Large storage/support compartment typical of plant cells."},{"id":"l6-t-cell-wall","lecture":6,"type":"Term","front":"Cell wall","back":"Rigid plant outer layer; not in animal cells."},{"id":"l6-t-cytoskeleton","lecture":6,"type":"Term","front":"Cytoskeleton","back":"Protein-fiber network for shape, anchoring, and movement."},{"id":"l6-t-microfilament","lecture":6,"type":"Term","front":"Microfilament","back":"Narrowest fiber; used in cell movement (e.g., white blood cells)."},{"id":"l6-t-intermediate-filament","lecture":6,"type":"Term","front":"Intermediate filament","back":"Structural fiber; keratin in hair and nails."},{"id":"l6-t-microtubule","lecture":6,"type":"Term","front":"Microtubule","back":"Widest hollow fiber; cilia, flagella, centrioles."},{"id":"l6-t-extracellular-matrix","lecture":6,"type":"Term","front":"Extracellular matrix","back":"Protein/carb mesh outside animal cells; holds tissues and aids communication."},{"id":"l6-t-plasmodesmata","lecture":6,"type":"Term","front":"Plasmodesmata","back":"Cytoplasmic channels between plant cells."},{"id":"l6-t-tight-junction","lecture":6,"type":"Term","front":"Tight junction","back":"Watertight seal between animal cells (skin, bladder)."},{"id":"l6-t-desmosome","lecture":6,"type":"Term","front":"Desmosome","back":"Spot-weld junction in tissues that stretch (heart, skin, muscle)."},{"id":"l6-t-gap-junction","lecture":6,"type":"Term","front":"Gap junction","back":"Animal communication channel; lets cardiac muscle contract together."},{"id":"l6-t-centriole","lecture":6,"type":"Term","front":"Centriole","back":"Animal microtubule structure used in cell division."},{"id":"l6-c-light-vs-electron-microscope","lecture":6,"type":"Compare","front":"Light vs electron microscope","back":"Portable 40–1000× vs higher-resolution research instrument."},{"id":"l6-c-prokaryote-vs-eukaryote","lecture":6,"type":"Compare","front":"Prokaryote vs eukaryote","back":"No nucleus/organelles vs nucleus + organelles."},{"id":"l6-c-plant-vs-animal-cell","lecture":6,"type":"Compare","front":"Plant vs animal cell","back":"Wall, chloroplasts, big vacuole vs lysosomes, centrioles, ECM."},{"id":"l6-c-rough-er-vs-smooth-er","lecture":6,"type":"Compare","front":"Rough ER vs smooth ER","back":"Ribosomes/proteins vs lipids/detox/Ca2+."},{"id":"l6-c-microfilament-vs-microtubule","lecture":6,"type":"Compare","front":"Microfilament vs microtubule","back":"Thinnest movement fibers vs widest hollow tubes."},{"id":"l6-c-plasmodesmata-vs-gap-junction","lecture":6,"type":"Compare","front":"Plasmodesmata vs gap junction","back":"Plant channels vs animal channels."},{"id":"l6-c-tight-junction-vs-desmosome","lecture":6,"type":"Compare","front":"Tight junction vs desmosome","back":"Waterproof seal vs stretchy spot-weld."}];
+    const KEY = "biol1414-drill-v1";
+    const LECTURE_LABEL = {2:"Method",3:"Life",4:"Chemistry",5:"Molecules",6:"Cells"};
+    const STOP = new Set(["the","and","for","that","with","from","this","are","was","were","not","but","you","your","into","than","then","also","only","such","have","has"]);
+    let lecture = "all", kind = "all";
+    let progress = load();
+    let queue = [], index = 0, revealed = false, guess = "", verdict = null;
+
+    function load(){
+      try { return JSON.parse(localStorage.getItem(KEY)) || {known:[], needsWork:[]}; }
+      catch { return {known:[], needsWork:[]}; }
+    }
+    function save(){ localStorage.setItem(KEY, JSON.stringify(progress)); }
+    function shuffle(a){ const x=a.slice(); for(let i=x.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [x[i],x[j]]=[x[j],x[i]]; } return x; }
+    function tokenize(t){ return t.toLowerCase().replace(/[^a-z0-9\s]/g," ").split(/\s+/).filter(w=>w.length>2 && !STOP.has(w)); }
+    function gradeGuess(g, ans){
+      const trimmed=g.trim(); if(!trimmed) return null;
+      const G=tokenize(trimmed), A=tokenize(ans);
+      if(!G.length) return ans.toLowerCase().includes(trimmed.toLowerCase());
+      const aset=new Set(A);
+      const coverage=G.filter(w=>aset.has(w)).length/Math.max(G.length,1);
+      const reverse=A.filter(w=>G.includes(w)).length/Math.max(A.length,1);
+      if(ans.toLowerCase().includes(trimmed.toLowerCase()) && trimmed.length>=4) return true;
+      return coverage>=0.45 || reverse>=0.35;
+    }
+    function filteredAll(){
+      return CARDS.filter(c => (lecture==="all"||c.lecture===lecture) && (kind==="all"||c.type===kind));
+    }
+    function pool(){
+      const known=new Set(progress.known);
+      return filteredAll().filter(c=>!known.has(c.id));
+    }
+    function reshuffle(){
+      queue = shuffle(pool().map(c=>c.id));
+      index = 0; revealed=false; guess=""; verdict=null;
+      render();
+    }
+    function current(){
+      const id=queue[index];
+      return CARDS.find(c=>c.id===id);
+    }
+    function chip(label, on, fn){
+      const b=document.createElement("button");
+      b.className="chip"+(on?" on":"");
+      b.textContent=label;
+      b.onclick=fn;
+      return b;
+    }
+    function renderFilters(){
+      const lec=document.getElementById("lecRow"); lec.innerHTML="";
+      lec.appendChild(chip("All", lecture==="all", ()=>{lecture="all"; reshuffle();}));
+      [2,3,4,5,6].forEach(n=>lec.appendChild(chip(n+" "+LECTURE_LABEL[n], lecture===n, ()=>{lecture=n; reshuffle();})));
+      const ty=document.getElementById("typeRow"); ty.innerHTML="";
+      [["all","All"],["Term","Term"],["Compare","Compare"]].forEach(([k,l])=>ty.appendChild(chip(l, kind===k, ()=>{kind=k; reshuffle();})));
+    }
+    function render(){
+      renderFilters();
+      const all=filteredAll();
+      const p=pool();
+      const knownN=all.filter(c=>progress.known.includes(c.id)).length;
+      const needN=all.filter(c=>progress.needsWork.includes(c.id)).length;
+      document.getElementById("statDeck").textContent=p.length;
+      document.getElementById("statKnown").textContent=knownN;
+      document.getElementById("statNeed").textContent=needN;
+      document.getElementById("bar").style.width = all.length ? ((knownN/all.length)*100)+"%" : "0%";
+      const stage=document.getElementById("stage");
+      const card=current();
+      if(!card){
+        const allKnown = all.length>0 && knownN>=all.length;
+        stage.innerHTML = `<div class="empty"><h2 class="term">${allKnown?"This filter is all known.":"No cards in this filter."}</h2>
+          <p class="lede" style="margin:0.75rem auto">${allKnown?"Known cards stay out of later shuffles. Reset them to drill again.":"Try another lecture or type."}</p>
+          <div class="actions" style="justify-content:center">${allKnown?'<button class="btn" id="resetBtn">Reset known in this browser</button>':''}
+          <button class="btn sec" id="shuffEmpty">Shuffle</button></div></div>`;
+        const r=document.getElementById("resetBtn"); if(r) r.onclick=()=>{ progress.known=[]; save(); reshuffle(); };
+        document.getElementById("shuffEmpty").onclick=reshuffle;
+        return;
+      }
+      const need = progress.needsWork.includes(card.id);
+      stage.innerHTML = `
+        <div class="meta">
+          <div class="row">
+            <span class="pill">Lecture ${card.lecture} · ${LECTURE_LABEL[card.lecture]}</span>
+            <span class="pill">${card.type}</span>
+            ${need?'<span class="pill need">Needs work</span>':''}
+          </div>
+          <span class="pill">${Math.min(index+1, queue.length)} / ${queue.length}</span>
+        </div>
+        <h2 class="term">${esc(card.front)}</h2>
+        <label class="block"><span>Your answer</span>
+          <textarea id="guess" ${revealed?"disabled":""} placeholder="Say it in your own words, then reveal.">${esc(guess)}</textarea>
+        </label>
+        ${!revealed?`
+          <div class="actions">
+            <button class="btn" id="reveal">Reveal answer</button>
+            <button class="btn sec" id="shuff">Shuffle remaining</button>
+          </div>`:`
+          <div class="verdict ${verdict===true?"ok":verdict===false?"bad":""}">
+            <strong>${verdict===true?"Correct — that matches the official answer.":verdict===false?"Incorrect — compare your wording to the official answer.":"No guess typed. Mark it yourself."}</strong>
+            <div class="actions">
+              <button class="btn ${verdict===true?"ok":"sec"}" id="markOk">Mark correct</button>
+              <button class="btn ${verdict===false?"bad":"sec"}" id="markBad">Mark incorrect</button>
+            </div>
+          </div>
+          <div class="official"><div class="k">Official answer</div><p>${esc(card.back)}</p></div>
+          <div class="grid2">
+            <button class="btn ${progress.known.includes(card.id)?"ok":"sec"}" id="known">Known — hide next shuffle</button>
+            <button class="btn ${need?"bad":"sec"}" id="need">Needs work</button>
+          </div>
+          <div class="actions">
+            <button class="btn" id="next">Next card</button>
+            <button class="btn sec" id="shuff">Shuffle remaining</button>
+          </div>`}`;
+      const ta=document.getElementById("guess");
+      if(ta) ta.oninput=e=>{ guess=e.target.value; };
+      const rev=document.getElementById("reveal");
+      if(rev) rev.onclick=()=>{ guess=(document.getElementById("guess")||{}).value||guess; revealed=true; verdict=gradeGuess(guess, card.back); render(); };
+      const sh=document.getElementById("shuff"); if(sh) sh.onclick=reshuffle;
+      const ok=document.getElementById("markOk"); if(ok) ok.onclick=()=>{ verdict=true; render(); };
+      const bad=document.getElementById("markBad"); if(bad) bad.onclick=()=>{ verdict=false; render(); };
+      const kn=document.getElementById("known"); if(kn) kn.onclick=()=>{ tag("known"); };
+      const nd=document.getElementById("need"); if(nd) nd.onclick=()=>{ tag("needsWork"); };
+      const nx=document.getElementById("next"); if(nx) nx.onclick=()=>{
+        revealed=false; guess=""; verdict=null;
+        if(index+1<queue.length) index++;
+        else { queue=shuffle(pool().map(c=>c.id)); index=0; }
+        render();
+      };
+    }
+    function tag(t){
+      const card=current(); if(!card) return;
+      progress.known=progress.known.filter(id=>id!==card.id);
+      progress.needsWork=progress.needsWork.filter(id=>id!==card.id);
+      if(t==="known") progress.known.push(card.id);
+      if(t==="needsWork") progress.needsWork.push(card.id);
+      save();
+      if(t==="known") reshuffle();
+      else render();
+    }
+    function esc(s){ return String(s).replace(/[&<>"']/g, c => '&#'+c.charCodeAt(0)+';'); }
+    reshuffle();
+  </script>
+</body>
 </html>
